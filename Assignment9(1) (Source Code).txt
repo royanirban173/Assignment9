@@ -1,0 +1,43 @@
+import numpy as np
+import pandas as pd
+
+#Function to Calculate Distance From Previous Zero
+
+def NearestZero(series):
+    ouTputLst=[]
+    dist=0
+    for i in series:
+        if i!=0:
+            ouTputLst.append(dist)
+            dist+=1
+        else:            
+            ouTputLst.append(dist)
+            dist=1
+    return np.array(ouTputLst)
+
+# End Of Function Body
+
+
+df = pd.DataFrame({'X': [7, 2, 0, 3, 4, 2, 5, 0, 3, 4]})
+
+# Adding New Column to DataFrame
+df['Y']=NearestZero(list(df.X))
+
+'''
+--------------TESTING THE OUTPUT----------------------------------------------
+
+'''
+
+df
+
+ 	X 	Y
+0 	7 	0
+1 	2 	1
+2 	0 	2
+3 	3 	1
+4 	4 	2
+5 	2 	3
+6 	5 	4
+7 	0 	5
+8 	3 	1
+9 	4 	2

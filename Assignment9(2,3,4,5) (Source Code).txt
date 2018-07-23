@@ -1,0 +1,97 @@
+import pandas as pd
+import numpy as np
+
+di=pd.date_range('01-01-2015',periods=365,freq='D') # Cretion Of DatetimeIndex di
+
+df=pd.DataFrame(np.random.randint(1,300,365),index=di,columns=['Random_Nos']) # Creation of DataFrame df
+
+#Adding Month and Weekday Name to DataFrame di
+df['Month']=di.month
+df['Day_Name']=di.weekday_name
+
+
+df.head()  #Testing DataFrame Contents
+
+'''
+2)-----OUTPUT------------------------------
+ 	Random_Nos 	Month 	Day_Name
+2015-01-01 	185 	1 	Thursday
+2015-01-02 	53 	1 	Friday
+2015-01-03 	154 	1 	Saturday
+2015-01-04 	294 	1 	Sunday
+2015-01-05 	219 	1 	Monday
+
+'''
+
+
+df.groupby('Day_Name').sum()['Random_Nos']  # Sum Of Random Nos for every Day of Week for the DataFrame
+
+'''
+-----OUTPUT------------------------------
+Day_Name
+Friday       6842
+Monday       7223
+Saturday     7671
+Sunday       7410
+Thursday     7627
+Tuesday      7633
+Wednesday    7224
+Name: Random_Nos, dtype: int64
+
+'''
+
+df[df.Day_Name=='Wednesday'].Random_Nos.sum() # Sum Of Random Nos for every Wednesday
+
+'''
+3)-----OUTPUT------------------------------
+7224
+'''
+
+df.groupby('Month').mean()['Random_Nos'] # Mean Of Random Nos for every Month
+
+'''
+4)-----OUTPUT------------------------------
+
+Month
+1     166.064516
+2     148.392857
+3     153.645161
+4     140.200000
+5     141.935484
+6     157.400000
+7     136.967742
+8     142.645161
+9     132.600000
+10    143.258065
+11    112.733333
+12    121.516129
+Name: Random_Nos, dtype: float64
+
+'''
+
+# Finding the Date on which Max Value Random_Nos is seen for defined months
+df[(df.Month==1) | (df.Month==2) | (df.Month==3) |(df.Month==4) ].sort_values(['Random_Nos'],ascending=False).head(1)
+'''
+5)-----OUTPUT------------------------------
+ 	Random_Nos 	Month 	Day_Name
+2015-04-13 	298 	4 	Monday
+'''
+
+# Finding the Date on which Max Value Random_Nos is seen for defined months
+df[(df.Month==5) | (df.Month==6) | (df.Month==7) |(df.Month==8) ].sort_values(['Random_Nos'],ascending=False).head(1)
+'''
+5)-----OUTPUT------------------------------
+
+ 	Random_Nos 	Month 	Day_Name
+2015-07-03 	299 	7 	Friday
+'''
+
+# Finding the Date on which Max Value Random_Nos is seen for defined months
+df[(df.Month==9) | (df.Month==10) | (df.Month==11) |(df.Month==12) ].sort_values(['Random_Nos'],ascending=False).head(1)
+'''
+5)-----OUTPUT------------------------------
+
+ 	Random_Nos 	Month 	Day_Name
+2015-10-22 	299 	10 	Thursday
+
+'''
